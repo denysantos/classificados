@@ -24,7 +24,7 @@ if(isset($_POST['titulo']) && !empty($_POST['titulo'])) {
     }
     
     
-    $a->editAnuncio($titulo,$categoria,$descricao,$valor,$estado,$fotos,$_GET['id']);
+    $a->editAnuncio($titulo,$categoria,$valor,$descricao,$estado,$fotos,$_GET['id']);
     
     ?>
     
@@ -101,8 +101,8 @@ if(isset($_GET['id']) && !empty($_GET['id'])){
                     <div class="panel-body"></div>
                     <?php foreach($info['fotos'] as $foto['url']): ?>
                     <div class="foto_item">
-                        <img src="assets/images/anuncios/<?php echo $foto['url']; ?>" class="img-thumbnail" border="0" /><br>
-                        <a href="excluir_foto.php?id=<?php echo $foto['id']; ?>" class="btn btn-danger">Excluir imagem</a><br>
+                        <img src="assets/images/anuncios/<?php echo $foto['url']; ?>" class="img-thumbnail" border="0" /><br/>
+                        <a href="excluir_foto.php?id=<?php echo $foto['id']; ?>" class="btn btn-danger">Excluir imagem</a>
                     </div>
                     <?php endforeach; ?>
                 </div>

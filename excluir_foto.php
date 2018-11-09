@@ -19,4 +19,3 @@ if(isset($id_anuncio)){
     header("Location: meus_anuncios.php");
 }
 
-?>

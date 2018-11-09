@@ -3,11 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/classificados/classes/usuarios.class.php</file>
-            <file>file:/C:/xampp/htdocs/classificados/pages/header.php</file>
-            <file>file:/C:/xampp/htdocs/classificados/meus_anuncios.php</file>
-            <file>file:/C:/xampp/htdocs/classificados/index.php</file>
+            <file>file:/C:/xampp/htdocs/classificados/assets/css/style.css</file>
+            <file>file:/C:/xampp/htdocs/classificados/editar_anuncio.php</file>
             <file>file:/C:/xampp/htdocs/classificados/classes/anuncios.class.php</file>
+            <file>file:/C:/xampp/htdocs/classificados/excluir_foto.php</file>
         </group>
     </open-files>
 </project-private>
