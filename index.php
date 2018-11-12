@@ -1,21 +1,38 @@
-<?php require 'pages/header.php'; ?>
+<?php 
+require 'pages/header.php'; 
+?>
 
 <?php
 require 'classes/anuncios.class.php';
 $a = new Anuncios();
 $total_anuncios = $a->getTotalAnuncios();
-$anuncios = $a->getUltimosAnuncios();
 
+$p = 1;
+if(isset($_GET['p']) && !empty($_GET['p'])){
+    $p = addslashes($_GET['p']);
+}
+
+//quantidade de itens exibidos por página
+$por_pagina = 4;
+$total_paginas = ceil($total_anuncios / $por_pagina);
+$anuncios = $a->getUltimosAnuncios($p,$por_pagina);
+
+?>
+
+<?php 
+//PENDENTE...
+
+//require 'classes/usuarios.class.php';
 //a classe de usuários já está sendo chamada no arquivo pages/header.php
-$u = new Usuarios();
-$total_usuarios = $u->getTotalUsuarios();
+//$u = new Usuarios();
+//$total_usuarios = $u->getTotalUsuarios();
 ?>
 
 
 <div class="container-fluid">
     <div class="jumbotron">
         <h2>Nós temos hoje <?php echo $total_anuncios; ?> anúncios.</h2>
-        <p>E mais <?php echo $total_usuarios; ?> usuários cadastrados.</p>
+        <!--<p>E mais <?php //echo $total_usuarios; ?> usuários cadastrados.</p> -->
     </div>
 
     <div class="row">
@@ -38,6 +55,9 @@ $total_usuarios = $u->getTotalUsuarios();
                         </td>
                         <td>
                             <a href="produto.php?id=<?php echo $anuncio['id'];?>"><?php echo $anuncio['titulo'];?></a>
+                            
+                        </td>
+                        <td>
                             <?php echo utf8_encode($anuncio['categoria']);?>                         
                         </td>
                         <td>
@@ -49,6 +69,13 @@ $total_usuarios = $u->getTotalUsuarios();
                     
                 </tbody>
             </table>
+            
+            <ul class="pagination">
+                <?php for($q=1;$q<=$total_paginas;$q++): ?>
+                <li class="<?php echo ($p==$q)?'active':''?>"><a href="index.php?p=<?php echo $q ?>"><?php echo $q; ?></a></li>
+                <?php endfor;?>
+            </ul>
+            
         </div>
     </div>
 </div>

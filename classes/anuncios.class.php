@@ -186,8 +186,9 @@ class Anuncios {
         return $row['c'];
     }
     
-    public function getUltimosAnuncios(){
+    public function getUltimosAnuncios($page,$perPage){
         $array = array();
+        $offset = ($page - 1) * 4;
         global $pdo;
         
           $sql = $pdo->prepare(
@@ -200,9 +201,9 @@ class Anuncios {
                 FROM categorias
                 WHERE categorias.id = anuncios.id_categoria) as categoria
                 FROM anuncios
-                ORDER BY id DESC"
+                ORDER BY id DESC LIMIT $offset, $perPage"
                 );
-        $sql->bindValue(":id_usuario", $_SESSION['cLogin']);
+        //$sql->bindValue(":id_usuario", $_SESSION['cLogin']);        
         $sql->execute();
         
         if($sql->rowCount() > 0){
