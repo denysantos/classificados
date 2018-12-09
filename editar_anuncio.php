@@ -11,46 +11,41 @@ if (empty($_SESSION['cLogin'])) {
 
 require 'classes/anuncios.class.php';
 $a = new Anuncios();
-if(isset($_POST['titulo']) && !empty($_POST['titulo'])) {
-    $titulo     = addslashes($_POST['titulo']);
-    $categoria  = addslashes($_POST['categoria']);
-    $valor      = addslashes($_POST['valor']);
-    $descricao  = addslashes($_POST['descricao']);
-    $estado     = addslashes($_POST['estado']);
-    if(isset($_FILES['fotos'])) {
+if (isset($_POST['titulo']) && !empty($_POST['titulo'])) {
+    $titulo = addslashes($_POST['titulo']);
+    $categoria = addslashes($_POST['categoria']);
+    $valor = addslashes($_POST['valor']);
+    $descricao = addslashes($_POST['descricao']);
+    $estado = addslashes($_POST['estado']);
+    if (isset($_FILES['fotos'])) {
         $fotos = $_FILES['fotos'];
     } else {
         $fotos = $array();
     }
-    
-    
-    $a->editAnuncio($titulo,$categoria,$valor,$descricao,$estado,$fotos,$_GET['id']);
-    
+
+
+    $a->editAnuncio($titulo, $categoria, $valor, $descricao, $estado, $fotos, $_GET['id']);
     ?>
-    
+
     <div class="alert alert-success">
         Produto editado com sucesso!
     </div>
-    
+
     <?php
 }
 
-if(isset($_GET['id']) && !empty($_GET['id'])){
-    
+if (isset($_GET['id']) && !empty($_GET['id'])) {
     $info = $a->getAnuncio($_GET['id']);
-    
 } else {
     ?>
-    
-    <script type="text/javascript">window.location.href="meus_anuncios.php";</script>
-    
-    <?php 
-    exit;
-    
-}
 
+    <script type="text/javascript">window.location.href = "meus_anuncios.php";</script>
+
+    <?php
+    exit;
+}
 ?>
-    
+
 <div class="container">
     <h1>Meus anúncios - Editar anúncio</h1>
 
@@ -58,15 +53,14 @@ if(isset($_GET['id']) && !empty($_GET['id'])){
         <div class="form-group">
             <label for="categoria">Categoria</label>            
             <select name="categoria" id="categoria" class="form-control">
-                <?php
-                require 'classes/categoria.class.php';
-                $c = new Categorias();
-                $cats = $c->getLista();
-                foreach($cats as $cat) {                    
-                
-                ?>
-                <option value="<?php echo $cat['id']; ?>" <?php echo ($info['id_categoria'] == $cat['id'])?'selected="selected"':''; ?>><?php echo utf8_encode($cat['nome']); ?></option>
-                <?php
+<?php
+require 'classes/categoria.class.php';
+$c = new Categorias();
+$cats = $c->getLista();
+foreach ($cats as $cat) {
+    ?>
+                    <option value="<?php echo $cat['id']; ?>" <?php echo ($info['id_categoria'] == $cat['id']) ? 'selected="selected"' : ''; ?>><?php echo utf8_encode($cat['nome']); ?></option>
+                    <?php
                 }
                 ?>
                 <?php //endforeach;?>
@@ -87,23 +81,23 @@ if(isset($_GET['id']) && !empty($_GET['id'])){
         <div class="form-group">
             <label for="estado">Estado de conservação</label>
             <select name="estado" id="estado" class="form-control">
-                <option value="0" <?php echo ($info['estado'] == '0')?'selected="selected"':''; ?>>Ruim</option>
-                <option value="1" <?php echo ($info['estado'] == '1')?'selected="selected"':''; ?>>Bom</option>
-                <option value="2" <?php echo ($info['estado'] == '2')?'selected="selected"':''; ?>>Ótimo</option>
+                <option value="0" <?php echo ($info['estado'] == '0') ? 'selected="selected"' : ''; ?>>Ruim</option>
+                <option value="1" <?php echo ($info['estado'] == '1') ? 'selected="selected"' : ''; ?>>Bom</option>
+                <option value="2" <?php echo ($info['estado'] == '2') ? 'selected="selected"' : ''; ?>>Ótimo</option>
             </select>
             <br />
             <div class="form-group">
                 <label for="add_foto">Fotos do anúncio: </label>
                 <input type="file" name="fotos[]" multiple /><br />
-                
+
                 <div class="panel panel-default">
                     <div class="panel-heading">Fotos do anúncio</div>
                     <div class="panel-body"></div>
-                    <?php foreach($info['fotos'] as $foto['url']): ?>
-                    <div class="foto_item">
-                        <img src="assets/images/anuncios/<?php echo $foto['url']; ?>" class="img-thumbnail" border="0" /><br/>
-                        <a href="excluir_foto.php?id=<?php echo $foto['id']; ?>" class="btn btn-danger">Excluir imagem</a>
-                    </div>
+<?php foreach ($info['fotos'] as $foto['url']): ?>
+                        <div class="foto_item">
+                            <img src="assets/images/anuncios/<?php echo $foto['url']; ?>" class="img-thumbnail" border="0" /><br/>
+                            <a href="excluir_foto.php?id=<?php echo $foto['id']; ?>" class="btn btn-danger">Excluir imagem</a>
+                        </div>
                     <?php endforeach; ?>
                 </div>
             </div>

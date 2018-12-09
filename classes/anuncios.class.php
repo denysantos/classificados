@@ -15,7 +15,7 @@ class Anuncios {
                                 FROM anuncios
                                WHERE id_usuario = :id_usuario");
         $sql->bindValue(":id_usuario", $_SESSION['cLogin']);
-        $sql->execute();
+            $sql->execute();
 
         if ($sql->rowCount() > 0) {
             $array = $sql->fetchAll();
@@ -28,7 +28,14 @@ class Anuncios {
         $array = array();
         global $pdo;
 
-        $sql = $pdo->prepare("SELECT * FROM anuncios WHERE id = :id");
+        $sql = $pdo->prepare("SELECT *,"
+                . "(SELECT categorias.nome
+                      FROM categorias
+                     WHERE categorias.id = anuncios.id_categoria) as categoria,
+                     (SELECT usuarios.telefone
+                      FROM usuarios
+                     WHERE usuarios.id = anuncios.id_usuario) as telefone"
+                . " FROM anuncios WHERE id = :id");
         $sql->bindValue(":id", $id);
         $sql->execute();
 
@@ -186,24 +193,57 @@ class Anuncios {
         return $row['c'];
     }
     
-    public function getUltimosAnuncios($page,$perPage){
+    public function getUltimosAnuncios($page,$perPage,$filtros){
+        global $pdo;        
         $array = array();
-        $offset = ($page - 1) * 4;
-        global $pdo;
         
+        $offset = ($page - 1) * 4;   
+        
+        
+        $filtrostring = array('1=1');
+        
+        if(!empty($filtros['categoria'])){
+            $filtrostring[] = 'anuncios.id_categoria = :id_categoria';
+        }
+        if(!empty($filtros['preco'])){
+            $filtrostring[] = 'anuncios.valor BETWEEN :preco1 AND :preco2';
+        }
+        if(!empty($filtros['estado'])){
+            $filtrostring[] = 'anuncios.estado = :estado';
+        }
+    
+
+
           $sql = $pdo->prepare(
                 "SELECT *,
                 (SELECT anuncios_imagens.url 
-                FROM anuncios_imagens
-                WHERE anuncios_imagens.id_anuncio = anuncios.id
+                   FROM anuncios_imagens
+                  WHERE anuncios_imagens.id_anuncio = anuncios.id
                 LIMIT 1) as url,
                 (SELECT categorias.nome
-                FROM categorias
-                WHERE categorias.id = anuncios.id_categoria) as categoria
-                FROM anuncios
+                   FROM categorias
+                  WHERE categorias.id = anuncios.id_categoria) as categoria
+                   FROM anuncios
+                  WHERE 
+                  ".implode(' AND ',$filtrostring)."
                 ORDER BY id DESC LIMIT $offset, $perPage"
                 );
-        //$sql->bindValue(":id_usuario", $_SESSION['cLogin']);        
+        
+        
+        if(!empty($filtros['categoria'])){
+            $sql->bindValue(':id_categoria',$filtros['categoria']);
+        }
+
+        if(!empty($filtros['preco'])){
+            $preco = explode('-', $filtros['preco']);
+            $sql->bindValue(':preco1',$preco[0]);
+            $sql->bindValue(':preco2',$preco[1]);
+        }
+
+        if(!empty($filtros['estado'])){
+            $sql->bindValue(':estado',$filtros['estado']);
+        }
+
         $sql->execute();
         
         if($sql->rowCount() > 0){

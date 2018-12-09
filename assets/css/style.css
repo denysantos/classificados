@@ -1,3 +1,7 @@
+#total{
+	color: red;
+}
+
 .foto_item{
     width: 150px;
     height: 200px;
@@ -8,4 +12,9 @@
 
 .foto_item img{
     height: 150px;
+}
+
+.carousel-inner img {    
+    min-height: 200px;    
+    min-width: 200px;
 }
