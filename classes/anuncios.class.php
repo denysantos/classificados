@@ -28,7 +28,9 @@ class Anuncios {
         $array = array();
         global $pdo;
 
-        $sql = $pdo->prepare("SELECT *,"
+        $sql = $pdo->prepare(""
+                . "SELECT *,"
+                //. "DECODE('0','Ruim','1','Bom','2','Ótimo') as estado,"                
                 . "(SELECT categorias.nome
                       FROM categorias
                      WHERE categorias.id = anuncios.id_categoria) as categoria,

@@ -42,11 +42,31 @@ $info = $a->getAnuncio($id);
         </div>
     
     <div class="col-sm-8">
-        <h1><?php echo $info['titulo']; ?></h1>
-        <h4><?php echo utf8_encode($info['categoria']); ?></h4>
-        <p><?php echo $info['descricao']; ?></p>
-        <h3>R$ <?php echo number_format($info['valor'], 2); ?></h3>
-        <h3>Fone: <?php echo $info['telefone']; ?></h3>
+        <table>
+            <tr>                
+                <td><h1><?php echo $info['titulo']; ?></h1></td>
+            </tr>
+            <tr>
+                <th><p>Categoria:</p></th>
+                <td><p><?php echo utf8_encode($info['categoria']); ?></p></td>
+            </tr>
+            <tr>
+                <th><p>Descrição:</p></th>
+                <td><p><?php echo $info['descricao']; ?></p></td>
+            </tr>
+            <tr>
+                <th><p>Estado:</p></th>
+                <td><p><?php echo $info['estado']; ?></p></td>
+            </tr>
+            <tr>
+                <th><p>Valor:</p></th>
+                <td><p>R$ <?php echo number_format($info['valor'], 2); ?></p></td>
+            </tr>
+            <tr>
+                <th><p>Fone:</p></th>
+                <td><p><?php echo $info['telefone']; ?></p></td>
+            </tr>        
+        </table>
     </div>
     </div>
 </div>
