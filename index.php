@@ -8,7 +8,19 @@ require 'classes/categoria.class.php';
 
 $a = new Anuncios();
 $total_anuncios = $a->getTotalAnuncios();
-$filtros = 0;
+//$filtros = 0;
+
+//Mantém os filtros selecionados.
+$filtros = array(
+    'categoria' => '',
+    'preco' => '',
+    'estado' => ''
+);
+
+if(isset($_GET['filtros'])){
+    $filtros = $_GET['filtros'];
+}
+
 
 $c = new Categorias();
 $categorias = $c->getLista();
@@ -28,10 +40,7 @@ $total_paginas = ceil($total_anuncios / $por_pagina);
 $anuncios = $a->getUltimosAnuncios($p,$por_pagina,$filtros);
 
 
-//Mantém os filtros selecionados.
-if(isset($_GET['filtros'])){
-    $filtros = $_GET['filtros'];
-}
+
 
 
 ?>
@@ -73,8 +82,8 @@ if(isset($_GET['filtros'])){
                         <option></option>
                         <option value="0-50" <?php echo ($filtros['preco']=='0-50')?'selected="selected"':''; ?>>R$0,00 - R$ 50,00</option>
                         <option value="51-100" <?php echo ($filtros['preco']=='51-100')?'selected="selected"':''; ?>>R$51,00 - R$100,00</option>
-                        <option value="101-200" <?php echo ($filtros['preco']=='101-100')?'selected="selected"':''; ?>>R$ 51,00 - R$100,00</option>
-                        <option value="201-500" <?php echo ($filtros['preco']=='201-500')?'selected="selected"':''; ?>>R$101,00 - R$500,00</option>
+                        <option value="101-200" <?php echo ($filtros['preco']=='101-200')?'selected="selected"':''; ?>>R$101,00 - R$200,00</option>
+                        <option value="201-500" <?php echo ($filtros['preco']=='201-500')?'selected="selected"':''; ?>>R$201,00 - R$500,00</option>
                     </select>                    
                 </div>
                 <div>

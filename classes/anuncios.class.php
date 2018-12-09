@@ -225,7 +225,7 @@ class Anuncios {
                   WHERE categorias.id = anuncios.id_categoria) as categoria
                    FROM anuncios
                   WHERE 
-                  ".implode(' AND ',$filtrostring)."
+                  ".implode(' AND ',$filtrostring)." 
                 ORDER BY id DESC LIMIT $offset, $perPage"
                 );
         
